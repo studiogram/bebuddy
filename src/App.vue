@@ -1,17 +1,54 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <main>
+    <p>Count: {{ distance }}</p>
+    <button @click="increment()">Increment</button>
+    <button @click="decrement()">Decrement</button>
+    <GameComponent />
+    <HighscoreComponent />
+    <ResetComponent />
+  </main>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { io } from "socket.io-client";
+import GameComponent from "./components/GameComponent.vue";
+import HighscoreComponent from "./components/HighscoreComponent.vue";
+import ResetComponent from "./components/ResetComponent.vue";
 
+import { computed } from "vue";
+import { useStore } from "vuex";
 export default {
-  name: 'App',
+  setup() {
+    const store = useStore();
+    const distance = computed(() => store.state.distance);
+    console.log(distance);
+
+    function increment() {
+      store.commit("increment");
+    }
+
+    function decrement() {
+      store.commit("decrement");
+    }
+
+    return { distance, increment, decrement };
+  },
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    GameComponent,
+    HighscoreComponent,
+    ResetComponent,
+  },
+  mounted() {
+    const socket = io("http://localhost:8000");
+    socket.on("connect", () => {
+      console.log(`connect ${socket.id}`);
+    });
+    socket.on("disconnect", () => {
+      console.log("disconnect");
+    });
+  },
+};
 </script>
 
 <style>
