@@ -3,6 +3,12 @@
     <p>Count: {{ distance }}</p>
     <button @click="increment()">Increment</button>
     <button @click="decrement()">Decrement</button>
+    <p>
+      distance: {{ distance }} dossard :{{ dossard }} country:{{
+        country
+      }}
+      popup:{{ popup }} bestscores{{ bestscores }}
+    </p>
     <GameComponent />
     <HighscoreComponent />
     <ResetComponent />
@@ -11,35 +17,34 @@
 
 <script>
 import { io } from "socket.io-client";
+import { mapState } from "vuex";
 import GameComponent from "./components/GameComponent.vue";
 import HighscoreComponent from "./components/HighscoreComponent.vue";
 import ResetComponent from "./components/ResetComponent.vue";
 
-import { computed } from "vue";
-import { useStore } from "vuex";
 export default {
-  setup() {
-    const store = useStore();
-    const distance = computed(() => store.state.distance);
-    console.log(distance);
-
-    function increment() {
-      store.commit("increment");
-    }
-
-    function decrement() {
-      store.commit("decrement");
-    }
-
-    return { distance, increment, decrement };
-  },
   name: "App",
   components: {
     GameComponent,
     HighscoreComponent,
     ResetComponent,
   },
+  beforeCreate() {
+    this.$store.commit("initialiseStore");
+  },
+  computed: {
+    ...mapState(["distance", "dossard", "country", "popup", "bestscores"]),
+  },
+  methods: {
+    increment() {
+      this.$store.commit("increment");
+    },
+    decrement() {
+      this.$store.commit("decrement");
+    },
+  },
   mounted() {
+    console.log("mounted");
     const socket = io("http://localhost:8000");
     socket.on("connect", () => {
       console.log(`connect ${socket.id}`);
@@ -52,6 +57,9 @@ export default {
 </script>
 
 <style>
+* {
+  cursor: none;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
