@@ -1,0 +1,52 @@
+$light: #FFFFFF;
+$yellow: #FED200;
+$grey: #424141;
+$pink: #E46BC9;
+$orange: #E1751D;
+$brown: #895425;
+$blue: #48A0D8;
+$green: #0AC460;
+$darkgreen: #008037;
+
+
+$colors: (
+  "light": $light,
+  "yellow": $yellow,
+  "grey": $grey,
+  "pink": $pink,
+  "orange": $orange,
+  "brown": $brown,
+  "blue": $blue,
+  "green": $green,
+  "darkgreen": $darkgreen,
+);
+
+@each $name, $color in $colors {
+  .bg-#{$name} {
+    background-color: $color;
+  }
+  .color-#{$name} {
+    color: $color;
+  }
+  .fill-#{$name} {
+    fill: $color;
+  }
+  .stroke-#{$name} {
+    stroke: $color;
+  }
+  .border-#{$name} {
+    border: 2px solid $color;
+  }
+  .border-t-#{$name} {
+    border-top: 2px solid $color;
+  }
+  .border-r-#{$name} {
+    border-right: 2px solid $color;
+  }
+  .border-b-#{$name} {
+    border-bottom: 2px solid $color;
+  }
+  .border-l-#{$name} {
+    border-left: 2px solid $color;
+  }
+}

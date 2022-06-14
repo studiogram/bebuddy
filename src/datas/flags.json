@@ -1,0 +1,26 @@
+[
+    {
+        "distance": 0,
+        "img": "france"
+    },
+    {
+        "distance": 11.82,
+        "img": "italie"
+    },
+    {
+        "distance": 53.58,
+        "img": "slovenie"
+    },
+    {
+        "distance": 68.17,
+        "img": "autriche"
+    },
+    {
+        "distance": 87.54,
+        "img": "slovaquie"
+    },
+    {
+        "distance": 93.00,
+        "img": "hongrie"
+    }
+]

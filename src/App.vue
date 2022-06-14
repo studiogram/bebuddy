@@ -1,20 +1,3 @@
-<template>
-  <main>
-    <p>Count: {{ distance }}</p>
-    <button @click="increment()">Increment</button>
-    <button @click="decrement()">Decrement</button>
-    <p>
-      distance: {{ distance }} dossard :{{ dossard }} country:{{
-        country
-      }}
-      popup:{{ popup }} bestscores{{ bestscores }}
-    </p>
-    <GameComponent />
-    <HighscoreComponent />
-    <ResetComponent />
-  </main>
-</template>
-
 <script>
 import { io } from "socket.io-client";
 import { mapState } from "vuex";
@@ -35,14 +18,6 @@ export default {
   computed: {
     ...mapState(["distance", "dossard", "country", "popup", "bestscores"]),
   },
-  methods: {
-    increment() {
-      this.$store.commit("increment");
-    },
-    decrement() {
-      this.$store.commit("decrement");
-    },
-  },
   mounted() {
     console.log("mounted");
     const socket = io("http://localhost:8000");
@@ -53,19 +28,31 @@ export default {
       console.log("disconnect");
     });
   },
+  methods: {
+    leave() {
+      console.log("leave app");
+      this.$refs.game.gamestart();
+    },
+    reset() {
+      console.log("reset app");
+      this.$refs.highscore.entering();
+    },
+    gameover() {
+      console.log("gameover app");
+      this.$refs.highscore.entering();
+    },
+  },
 };
 </script>
 
-<style>
-* {
-  cursor: none;
-}
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+@import "@/assets/scss/main.scss";
 </style>
+
+<template>
+  <main>
+    <GameComponent ref="game" @gameover="gameover()" />
+    <HighscoreComponent ref="highscore" @leave="leave()" />
+    <ResetComponent ref="reset" @reset="reset()" @gameover="gameover()" />
+  </main>
+</template>

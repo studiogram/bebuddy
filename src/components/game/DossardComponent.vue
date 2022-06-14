@@ -1,15 +1,24 @@
-<template>
-  <div>
-  
-  </div>
-</template>
-
 <script>
+import { mapState } from "vuex";
+
 export default {
-  name: 'DossardComponent'
-}
+  name: "DossardComponent",
+  computed: {
+    ...mapState(["dossard", "currentDistance"]),
+  },
+  methods: {
+    reset() {
+      this.currentDistance = 0;
+    },
+  },
+};
 </script>
 
-<style scoped>
+<style lang="scss" scoped></style>
 
-</style>
+<template>
+  <div class="flex justify-between w-full px-6">
+    <p class="color-light">{{ currentDistance.toFixed(2) }}km</p>
+    <p class="color-light balmy">Dossard {{ dossard }}</p>
+  </div>
+</template>

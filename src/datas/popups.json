@@ -1,0 +1,254 @@
+[
+    {
+        "distance": 0.01,
+        "img": "marseille"
+    },
+    {
+        "distance": 1.53,
+        "img": "auriol"
+    },
+    {
+        "distance": 5.09,
+        "img": "vidauban"
+    },
+    {
+        "distance": 7.92,
+        "img": "cannes"
+    },
+    {
+        "distance": 9.61,
+        "img": "nice"
+    },
+    {
+        "distance": 10.66,
+        "img": "monaco"
+    },
+    {
+        "distance": 11.82,
+        "img": "italie"
+    },
+    {
+        "distance": 15.35,
+        "img": "imperia"
+    },
+    {
+        "distance": 19.08,
+        "img": "savona"
+    },
+    {
+        "distance": 21.56,
+        "img": "genes"
+    },
+    {
+        "distance": 25.30,
+        "img": "tortona"
+    },
+    {
+        "distance": 29.10,
+        "img": "milan"
+    },
+    {
+        "distance": 33.26,
+        "img": "brescia"
+    },
+    {
+        "distance": 35.68,
+        "img": "peschieradelgarda"
+    },
+    {
+        "distance": 37.31,
+        "img": "verone"
+    },
+    {
+        "distance": 39.74,
+        "img": "arcugnano"
+    },
+    {
+        "distance": 40.64,
+        "img": "montegalda"
+    },
+    {
+        "distance": 41.83,
+        "img": "selvezzano"
+    },
+    {
+        "distance": 44.15,
+        "img": "venise"
+    },
+    {
+        "distance": 47.01,
+        "img": "sindacale"
+    },
+    {
+        "distance": 48.06,
+        "img": "latisana"
+    },
+    {
+        "distance": 49.78,
+        "img": "cervignano"
+    },
+    {
+        "distance": 50.74,
+        "img": "monfalcone"
+    },
+    {
+        "distance": 51.62,
+        "img": "santacroce"
+    },
+    {
+        "distance": 52.42,
+        "img": "trieste"
+    },
+    {
+        "distance": 53.58,
+        "img": "slovenie"
+    },
+    {
+        "distance": 54.51,
+        "img": "divaca"
+    },
+    {
+        "distance": 55.30,
+        "img": "razdrto"
+    },
+    {
+        "distance": 56.05,
+        "img": "gorenje"
+    },
+    {
+        "distance": 57.40,
+        "img": "vrhnika"
+    },
+    {
+        "distance": 58.61,
+        "img": "ljubjana"
+    },
+    {
+        "distance": 60.54,
+        "img": "blagovica"
+    },
+    {
+        "distance": 63.04,
+        "img": "celje"
+    },
+    {
+        "distance": 64.49,
+        "img": "zbelovo"
+    },
+    {
+        "distance": 65.38,
+        "img": "leskovec"
+    },
+    {
+        "distance": 66.70,
+        "img": "maribor"
+    },
+    {
+        "distance": 67.01,
+        "img": "dolnjapocehova"
+    },
+    {
+        "distance": 68.17,
+        "img": "autriche"
+    },
+    {
+        "distance": 71.91,
+        "img": "graz"
+    },
+    {
+        "distance": 72.62,
+        "img": "gratweinstrabengel"
+    },
+    {
+        "distance": 74.49,
+        "img": "pernegandermur"
+    },
+    {
+        "distance": 76.30,
+        "img": "kindberg"
+    },
+    {
+        "distance": 76.97,
+        "img": "krieglach"
+    },
+    {
+        "distance": 77.62,
+        "img": "mürzzuschlag"
+    },
+    {
+        "distance": 79.12,
+        "img": "gloggnitz"
+    },
+    {
+        "distance": 79.88,
+        "img": "neunkirchen"
+    },
+    {
+        "distance": 80.79,
+        "img": "wienerneustadt"
+    },
+    {
+        "distance": 81.69,
+        "img": "kottingbrunn"
+    },
+    {
+        "distance": 83.59,
+        "img": "vienne"
+    },
+    {
+        "distance": 84.88,
+        "img": "schonauanderdonau"
+    },
+    {
+        "distance": 86.38,
+        "img": "hainburganderdonau"
+    },
+    {
+        "distance": 87.54,
+        "img": "slovaquie"
+    },
+    {
+        "distance": 88.43,
+        "img": "bratislava"
+    },
+    {
+        "distance": 89.54,
+        "img": "hamuliakovo"
+    },
+    {
+        "distance": 91.84,
+        "img": "medvedov"
+    },
+    {
+        "distance": 93.00,
+        "img": "hongrie"
+    },
+    {
+        "distance": 95.11,
+        "img": "komarom"
+    },
+    {
+        "distance": 96.71,
+        "img": "labatlan"
+    },
+    {
+        "distance": 97.83,
+        "img": "dorog"
+    },
+    {
+        "distance": 98.35,
+        "img": "pilisjaszfalu"
+    },
+    {
+        "distance": 98.53,
+        "img": "piliscsaba"
+    },
+    {
+        "distance": 99.69,
+        "img": "szepilona"
+    },
+    {
+        "distance": 100,
+        "img": "budapest"
+    }
+]
