@@ -7,10 +7,12 @@ export default {
   data() {
     return {
       valid: true,
+      allowBlink: false,
+      timeout: 10,
     };
   },
   computed: {
-    ...mapState(["highscores"]),
+    ...mapState(["highscores", "dossard", "distance"]),
   },
   mounted() {
     this.setTimelines();
@@ -22,6 +24,10 @@ export default {
         .timeline({
           paused: true,
           repeat: 0,
+          onComplete: () => {
+            this.allowBlink = true;
+            gsap.set(this.$refs.message, { autoAlpha: 1 });
+          },
         })
         .to(this.$refs.highscore, {
           duration: 1.5,
@@ -44,6 +50,10 @@ export default {
     entering() {
       this.valid = true;
       this.highscoreTl.reverse();
+      setTimeout(() => {
+        this.allowBlink = false;
+        gsap.to(this.$refs.message, { autoAlpha: 0, duration: 1 });
+      }, this.timeout * 1000);
     },
     leaving() {
       if (this.valid == true) {
@@ -57,6 +67,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .highscore {
   position: relative;
   height: 100vh;
@@ -77,12 +95,24 @@ export default {
       width: 450px;
     }
   }
+  .highscore__ended {
+    font-size: 5em;
+    line-height: 1.25em;
+  }
   .highscore__scores {
+    & > div {
+      visibility: hidden;
+      opacity: 0;
+    }
     .highscore__scores__single {
       font-size: 2em;
       &:last-of-type {
         border-bottom: 0px !important;
       }
+    }
+    .highscore__scores__paragraph {
+      font-size: 3em;
+      line-height: 1.25em;
     }
   }
   footer {
@@ -93,6 +123,9 @@ export default {
         width: 200px !important;
       }
     }
+  }
+  .blink {
+    animation: 0.5s linear infinite blink alternate;
   }
 }
 </style>
@@ -107,6 +140,7 @@ export default {
       <img src="@/assets/img/logo_text.svg" alt="BeBuddy logo texte" />
     </figure>
     <div
+      v-if="distance < 99.9"
       ref="highscorebutton"
       class="highscore__button grow w-full text-center"
     >
@@ -138,19 +172,47 @@ export default {
         </svg>
       </button>
     </div>
-    <ul class="highscore__scores grow w-full p-10">
-      <li
-        v-for="(highscore, index) in highscores"
-        :key="index"
-        class="highscore__scores__single flex justify-between color-brown py-8 color-brown border-b-orange"
-      >
-        <div class="highscore__scores__single__dossard">
-          <span class="color-light">{{ index + 1 }}. </span>
-          <span class="balmy">dossard {{ highscore.dossard }}</span>
-        </div>
-        <div class="highscore__scores__single__km">{{ highscore.km }}km</div>
-      </li>
-    </ul>
+    <div v-else>
+      <p class="highscore__ended color-brown text-center">
+        La course est terminée!
+      </p>
+    </div>
+    <div class="highscore__scores grow w-full p-10">
+      <div ref="message" v-if="dossard != 0" class="mb-10">
+        <p
+          class="highscore__scores__paragraph color-light text-center"
+          v-if="highscores.some((highscore) => highscore.dossard == dossard)"
+        >
+          Bravo dossard {{ dossard }}, vous faîtes parti du highscore!
+        </p>
+        <p
+          class="highscore__scores__paragraph color-light text-center"
+          v-if="!highscores.some((highscore) => highscore.dossard == dossard)"
+        >
+          Merci dossard {{ dossard }} pour votre participation ...
+        </p>
+      </div>
+      <ul>
+        <li
+          v-for="(highscore, index) in highscores"
+          :key="index"
+          class="highscore__scores__single border-b-orange w-full"
+        >
+          <div
+            :class="highscore.dossard == dossard && allowBlink ? 'blink' : ''"
+            class="flex justify-between color-brown py-8 color-brown w-full"
+          >
+            <div class="highscore__scores__single__dossard">
+              <span class="color-light">{{ index + 1 }}. </span>
+              <span class="balmy">dossard {{ highscore.dossard }}</span>
+            </div>
+            <div class="highscore__scores__single__km">
+              {{ highscore.km }}km
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
     <footer>
       <figure class="highscore__logo">
         <img ref="restart" src="@/assets/img/logo.svg" alt="BeBuddy logo" />

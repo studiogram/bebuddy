@@ -7,7 +7,6 @@ export default {
       .timeline({
         paused: true,
         onComplete: () => {
-          console.log("countdown end");
           this.$emit("countdownend");
         },
       })
@@ -39,7 +38,6 @@ export default {
   },
   methods: {
     start() {
-      console.log("count down start");
       this.starterTl.restart();
     },
   },

@@ -7,12 +7,11 @@ export default {
   name: "TimerComponent",
   data() {
     return {
-      time: 10,
-      update: 2,
+      time: 240,
+      update: 5,
     };
   },
   mounted() {
-    console.log("yoyo settings++");
     this.setTimelines();
   },
   methods: {

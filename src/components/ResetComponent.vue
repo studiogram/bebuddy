@@ -1,6 +1,6 @@
 <script>
 import gsap from "gsap";
-import { mapState } from "vuex";
+// import { mapState } from "vuex";
 
 export default {
   name: "ResetComponent",
@@ -10,7 +10,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(["distance", "dossard", "country", "popup", "bestscores"]),
+    ratio: {
+      get() {
+        return this.$store.state.ratio;
+      },
+      set(value) {
+        this.$store.commit("updateRatio", value);
+      },
+    },
   },
   mounted() {
     this.$refs.hidden.addEventListener("click", (e) => {
@@ -41,6 +48,14 @@ export default {
       this.valid = false;
       this.$emit("gameover");
       this.hide();
+    });
+
+    this.$refs.moins.addEventListener("click", () => {
+      this.$store.commit("decrementRatio");
+    });
+
+    this.$refs.plus.addEventListener("click", () => {
+      this.$store.commit("incrementRatio");
     });
   },
   methods: {
@@ -73,7 +88,27 @@ export default {
     background: rgba(0, 0, 0, 0.5);
     .reset__panel__content {
       background: white;
-      max-width: 600px;
+      max-width: 650px;
+    }
+    .reset__panel__content__ratio {
+      text-align: center;
+      line-height: 50px;
+      font-size: 2.5em;
+      span {
+        width: 50px;
+        height: 50px;
+      }
+      input {
+        text-align: center;
+        width: calc(100% - 100px);
+        height: 50px;
+        -moz-appearance: textfield;
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
     }
   }
   button {
@@ -93,14 +128,19 @@ export default {
     >
       <div class="reset__panel__content p-5 text-center">
         <p>Êtes vous sûr(e) de vouloir quitter la course ?</p>
-        <p class="flex">
+        <p class="flex justify-center">
           <button class="bg-orange color-light" ref="cancel">Annuler</button>
           <button class="bg-brown color-light" ref="reset">
-            Recommencer le parcours
+            Tout recommencer
           </button>
           <button class="bg-green color-light" ref="gameover">
-            Nouvelle course
+            Terminer la course
           </button>
+        </p>
+        <p class="reset__panel__content__ratio flex mt-10">
+          <span ref="moins" class="border-orange bg-orange color-light">-</span>
+          <input class="border-orange" type="number" v-model="ratio" />
+          <span ref="plus" class="border-orange bg-orange color-light">+</span>
         </p>
       </div>
     </div>

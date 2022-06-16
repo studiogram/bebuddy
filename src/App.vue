@@ -1,5 +1,4 @@
 <script>
-import { io } from "socket.io-client";
 import { mapState } from "vuex";
 import GameComponent from "./components/GameComponent.vue";
 import HighscoreComponent from "./components/HighscoreComponent.vue";
@@ -18,16 +17,6 @@ export default {
   computed: {
     ...mapState(["distance", "dossard", "country", "popup", "bestscores"]),
   },
-  mounted() {
-    console.log("mounted");
-    const socket = io("http://localhost:8000");
-    socket.on("connect", () => {
-      console.log(`connect ${socket.id}`);
-    });
-    socket.on("disconnect", () => {
-      console.log("disconnect");
-    });
-  },
   methods: {
     leave() {
       console.log("leave app");
@@ -39,6 +28,7 @@ export default {
     },
     gameover() {
       console.log("gameover app");
+      this.$store.commit("gameOver");
       this.$refs.highscore.entering();
     },
   },

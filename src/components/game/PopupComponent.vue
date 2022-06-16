@@ -51,6 +51,7 @@ export default {
     <img
       ref="popup"
       :src="require(`@/assets/popups/${popups[popup].img}.png`)"
+      @error="imageUrl = 'alt-image.jpg'"
       alt="Popup"
     />
   </div>

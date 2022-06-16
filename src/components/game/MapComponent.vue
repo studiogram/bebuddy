@@ -11,6 +11,7 @@ export default {
     ...mapState(["distance"]),
   },
   mounted() {
+    console.log("map mounted");
     this.setTimelines();
     this.update(this.distance);
     this.reset();
@@ -23,6 +24,7 @@ export default {
     },
     update(val) {
       this.followTl.progress(val / 100);
+      this.bubbleTl.progress(val / 100);
     },
     setTimelines() {
       gsap
@@ -32,7 +34,19 @@ export default {
           { scale: 0, transformOrigin: "center center" },
           { scale: 1, duration: 1 }
         );
-      this.followTl = gsap
+      this.followTl = gsap.timeline({ paused: true }).fromTo(
+        this.$refs.draw,
+        {
+          drawSVG: "0% 0%",
+        },
+        {
+          drawSVG: "0% 100%",
+          ease: "none",
+          duration: 1,
+        }
+      );
+
+      this.bubbleTl = gsap
         .timeline({ paused: true })
         .to(this.$refs.group, {
           motionPath: {
@@ -47,18 +61,6 @@ export default {
           ease: "none",
           duration: 1,
         })
-        .fromTo(
-          this.$refs.draw,
-          {
-            drawSVG: "0% 0%",
-          },
-          {
-            drawSVG: "0% 100%",
-            ease: "none",
-            duration: 1,
-          },
-          "<"
-        )
         .to(
           this.$refs.bubble,
           {
@@ -72,7 +74,7 @@ export default {
             },
             transformOrigin: "center",
             ease: "none",
-            duration: 0.993,
+            duration: 0.991,
           },
           "<"
         );
@@ -92,19 +94,19 @@ figure {
   position: relative;
   .map {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 900%;
+    bottom: -600px;
+    left: -300px;
+    width: 1800%;
     .map__path,
     .map__draw {
       fill: none;
-      stroke-width: 10;
+      stroke-width: 4;
       stroke-linecap: round;
-      stroke-miterlimit: 10;
+      stroke-miterlimit: 4;
     }
     .map__path {
       opacity: 0.8;
-      stroke-width: 6;
+      stroke-width: 4;
       stroke: #41403f;
     }
     .map__draw {
@@ -114,11 +116,11 @@ figure {
       visibility: hidden;
     }
     .map__bubble__circle {
-      fill: #fdd000;
+      fill: #ffe578;
     }
     .map__bubble__grow {
       opacity: 0.2;
-      transform: translate(0px);
+      // transform: translate(0px);
       fill: #fdd000;
     }
   }
@@ -157,9 +159,9 @@ figure {
             class="map__bubble__grow"
             cx="300.8"
             cy="3268.7"
-            r="30"
+            r="12"
           />
-          <circle class="map__bubble__circle" cx="300.8" cy="3268.7" r="10" />
+          <circle class="map__bubble__circle" cx="300.8" cy="3268.7" r="6" />
         </g>
       </g>
       <path

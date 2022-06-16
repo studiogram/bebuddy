@@ -76,10 +76,6 @@
         "img": "venise"
     },
     {
-        "distance": 47.01,
-        "img": "sindacale"
-    },
-    {
         "distance": 48.06,
         "img": "latisana"
     },
@@ -173,7 +169,7 @@
     },
     {
         "distance": 77.62,
-        "img": "mürzzuschlag"
+        "img": "murzzuschlag"
     },
     {
         "distance": 79.12,
@@ -248,7 +244,7 @@
         "img": "szepilona"
     },
     {
-        "distance": 100,
+        "distance": 99.99,
         "img": "budapest"
     }
 ]

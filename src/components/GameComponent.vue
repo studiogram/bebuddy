@@ -1,4 +1,5 @@
 <script>
+import { io } from "socket.io-client";
 import { mapState } from "vuex";
 import CountDownComponent from "./game/CountDownComponent.vue";
 import MapComponent from "./game/MapComponent.vue";
@@ -6,7 +7,7 @@ import PopupComponent from "./game/PopupComponent.vue";
 import DossardComponent from "./game/DossardComponent.vue";
 import MiniMapComponent from "./game/MiniMapComponent.vue";
 import FlagComponent from "./game/FlagComponent.vue";
-import SpeedComponent from "./game/SpeedComponent.vue";
+// import SpeedComponent from "./game/SpeedComponent.vue";
 import TimerComponent from "./game/TimerComponent.vue";
 
 export default {
@@ -18,40 +19,52 @@ export default {
     DossardComponent,
     MiniMapComponent,
     FlagComponent,
-    SpeedComponent,
+    // SpeedComponent,
     TimerComponent,
   },
   computed: {
-    ...mapState(["distance", "dossard", "country", "popup", "bestscores"]),
+    ...mapState(["distance"]),
+  },
+  data() {
+    return {
+      available: false,
+    };
   },
   mounted() {
-    // document.body.addEventListener("keyup", this.detect.bind(this));
-    // document.onkeyup = (e) => {
-    //   if (e.code == "Space") {
-    //     console.log("space game");
-    //     this.$store.dispatch("increment");
-    //     this.$refs.map.update(this.distance);
-    //     this.$refs.minimap.update(this.distance);
-    //   }
-    // };
+    console.log("game");
+    this.detected = (e) => {
+      if (e.key == "a") this.action();
+    };
+    this.detectHandler = this.detected.bind(this);
+    const socket = io("http://localhost:8000");
+    socket.on("connect", () => {
+      console.log(`connect ${socket.id}`);
+      socket.on("timer", () => this.action());
+    });
   },
   methods: {
-    detect(e) {
-      console.log("detect");
-      console.log(e.code);
+    action() {
+      console.log("coucou");
+      if (this.available) {
+        this.$store.dispatch("increment");
+        // this.$refs.speed.update();
+        this.$refs.map.update(this.distance);
+        this.$refs.minimap.update(this.distance);
+      }
     },
     countdownend() {
       this.$refs.timer.start();
+      this.available = true;
+      document.body.addEventListener("keyup", this.detectHandler);
     },
     gameover() {
-      console.log("gameover");
-      this.$store.commit("gameOver");
       this.$emit("gameover");
+      this.available = false;
+      document.body.removeEventListener("keyup", this.detectHandler);
     },
     gamestart() {
       this.$store.commit("newGame");
       this.$refs.timer.reset();
-      this.$refs.dossard.reset();
       this.$refs.countdown.start();
       this.$refs.popup.start();
     },
@@ -84,7 +97,7 @@ export default {
     z-index: 49;
   }
   .game__infos {
-    height: 20vh;
+    height: 18vh;
     .game__infos__dossard {
       height: 5vh;
     }
@@ -119,7 +132,7 @@ export default {
         <DossardComponent ref="dossard" />
       </div>
       <ul
-        class="game__infos__details flex items-stretch justify-evenly bg-blue"
+        class="game__infos__details flex items-stretch justify-between bg-blue"
       >
         <li class="game__infos__details__single">
           <MiniMapComponent ref="minimap" />
@@ -127,9 +140,9 @@ export default {
         <li class="game__infos__details__single">
           <FlagComponent ref="flag" />
         </li>
-        <li class="game__infos__details__single">
+        <!-- <li class="game__infos__details__single">
           <SpeedComponent ref="speed" />
-        </li>
+        </li> -->
         <li class="game__infos__details__single">
           <TimerComponent ref="timer" @timerend="gameover()" />
         </li>
