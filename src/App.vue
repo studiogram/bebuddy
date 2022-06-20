@@ -25,11 +25,17 @@ export default {
     reset() {
       console.log("reset app");
       this.$refs.highscore.entering();
+      this.$refs.game.clearFake();
     },
     gameover() {
       console.log("gameover app");
       this.$store.commit("gameOver");
       this.$refs.highscore.entering();
+      this.$refs.game.clearFake();
+    },
+    fake() {
+      this.$refs.highscore.entering();
+      this.$refs.game.clearFake();
     },
   },
 };
@@ -43,6 +49,11 @@ export default {
   <main>
     <GameComponent ref="game" @gameover="gameover()" />
     <HighscoreComponent ref="highscore" @leave="leave()" />
-    <ResetComponent ref="reset" @reset="reset()" @gameover="gameover()" />
+    <ResetComponent
+      ref="reset"
+      @reset="reset()"
+      @gameover="gameover()"
+      @fake="fake()"
+    />
   </main>
 </template>

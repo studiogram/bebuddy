@@ -23,15 +23,18 @@ export default {
     TimerComponent,
   },
   computed: {
-    ...mapState(["distance"]),
+    ...mapState(["distance", "fake"]),
   },
   data() {
     return {
+      fakeKmh: 10,
+      fakeInterval: false,
       available: false,
+      countInterval: false,
     };
   },
   mounted() {
-    console.log("game");
+    console.log("game mounted");
     this.detected = (e) => {
       if (e.key == "a") this.action();
     };
@@ -44,29 +47,43 @@ export default {
   },
   methods: {
     action() {
-      console.log("coucou");
       if (this.available) {
         this.$store.dispatch("increment");
         // this.$refs.speed.update();
-        this.$refs.map.update(this.distance);
-        this.$refs.minimap.update(this.distance);
+        if (this.$refs.map) this.$refs.map.update(this.distance);
+        if (this.$refs.minimap) this.$refs.minimap.update(this.distance);
       }
     },
     countdownend() {
+      console.log("end countdown");
       this.$refs.timer.start();
       this.available = true;
       document.body.addEventListener("keyup", this.detectHandler);
+      console.log(`fake: ${this.fake}`);
+
+      if (this.fake == true) {
+        this.fakeInterval = setInterval(() => {
+          this.action();
+        }, 1000 / ((this.fakeKmh * 1000) / 0.31 / 3600));
+      }
     },
     gameover() {
+      console.log("gameover gammmmeeee");
       this.$emit("gameover");
       this.available = false;
       document.body.removeEventListener("keyup", this.detectHandler);
     },
+
     gamestart() {
       this.$store.commit("newGame");
       this.$refs.timer.reset();
       this.$refs.countdown.start();
       this.$refs.popup.start();
+    },
+    clearFake() {
+      console.log("clear faker");
+      if (this.fakeInterval != false) clearInterval(this.fakeInterval);
+      this.fakeInterval = false;
     },
   },
 };

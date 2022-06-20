@@ -18,6 +18,11 @@ export default {
         this.$store.commit("updateRatio", value);
       },
     },
+    fake: {
+      get() {
+        return this.$store.state.fake;
+      },
+    },
   },
   mounted() {
     this.$refs.hidden.addEventListener("click", (e) => {
@@ -56,6 +61,15 @@ export default {
 
     this.$refs.plus.addEventListener("click", () => {
       this.$store.commit("incrementRatio");
+    });
+
+    this.$refs.fake.addEventListener("click", () => {
+      if (!this.valid) return;
+      this.$store.commit("updateFake");
+      this.valid = false;
+      this.$emit("gameover");
+      this.hide();
+      if (this.fake == true) this.$emit("fake");
     });
   },
   methods: {
@@ -130,11 +144,21 @@ export default {
         <p>Êtes vous sûr(e) de vouloir quitter la course ?</p>
         <p class="flex justify-center">
           <button class="bg-orange color-light" ref="cancel">Annuler</button>
+          <button class="bg-green color-light" ref="gameover">
+            Terminer la course
+          </button>
+        </p>
+        <p class="flex justify-center">
           <button class="bg-brown color-light" ref="reset">
             Tout recommencer
           </button>
-          <button class="bg-green color-light" ref="gameover">
-            Terminer la course
+          <button
+            :class="fake ? 'bg-green' : 'bg-brown'"
+            class="color-light"
+            ref="fake"
+          >
+            <span v-if="fake">Vraie</span
+            ><span v-if="!fake">Fausse</span> course
           </button>
         </p>
         <p class="reset__panel__content__ratio flex mt-10">

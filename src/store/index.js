@@ -12,6 +12,7 @@ const initialState = () => {
     country: 0,
     popup: 0,
     highscores: [],
+    fake: false,
     ratio: 7,
   };
 };
@@ -38,6 +39,9 @@ const mutations = {
   },
   updateRatio(state, value) {
     state.ratio = value;
+  },
+  updateFake(state) {
+    state.fake = !state.fake;
   },
   newGame(state) {
     state.dossard++;
